@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.belongsTo(models.Airport, {
-        foreignKey: 'code', //column we are referencing to make that as foreign key
+        foreignKey: 'departureAirportId', //column we are referencing to make that as foreign key
       });
 
       this.belongsTo(models.Airport, {
-        foreignKey: 'code',
+        foreignKey: 'arrivalAirportId',
       });
     }
   }
