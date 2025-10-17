@@ -1,4 +1,6 @@
 const { Logger } = require("../config");
+const { StatusCodes } = require('http-status-codes');
+const AppError = require('../utils/errors/app-error');
 
 class CrudRepository {
   constructor(model) {
@@ -16,12 +18,18 @@ class CrudRepository {
         id: data,
       },
     });
+    if(!resposne){
+      throw new AppError("Not able to destroy the requested resource ", StatusCodes.NOT_FOUND);
+    }
     return resposne;
   }
 
   async get(data) {
-    const resposne = await this.model.findByPk(data);
-    return resposne;
+    const response = await this.model.findByPk(data);
+    if(!response){
+      throw new AppError("Not able to find the resource ", StatusCodes.NOT_FOUND);
+    }
+    return response;
   }
 
   async getAll(data) {
