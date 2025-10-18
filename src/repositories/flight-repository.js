@@ -1,6 +1,8 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 const CrudRepository = require("./crud-repository");
 const { Flight, Airplane, Airport, City } = require("../models");
+const db = require('../models');
+const {addRowLockOnFlights} = require('./queries');
 
 class FlightRepository extends CrudRepository {
   constructor() {
@@ -22,29 +24,39 @@ class FlightRepository extends CrudRepository {
           model: Airport,
           required: true,
           as: "departureAirport",
-          on : {
-            col1: Sequelize.where(Sequelize.col("Flight.departureAirportId"), "=", Sequelize.col("departureAirport.code"))
+          on: {
+            col1: Sequelize.where(Sequelize.col("Flight.departureAirportId"), "=", Sequelize.col("departureAirport.code")),
           },
           include: {
             model: City,
             required: true,
-          }
+          },
         },
         {
           model: Airport,
           required: true,
           as: "arrivalAirport",
-          on : {
-            col1: Sequelize.where(Sequelize.col("Flight.arrivalAirportId"), "=", Sequelize.col("arrivalAirport.code"))
+          on: {
+            col1: Sequelize.where(Sequelize.col("Flight.arrivalAirportId"), "=", Sequelize.col("arrivalAirport.code")),
           },
           include: {
             model: City,
             required: true,
-          }
+          },
         },
       ],
     });
     return response;
+  }
+
+  async updateRemainingSeats(flightId, seats, decrease = true) {
+    const flight = await Flight.findByPk(flightId);
+    if (Number(decrease) == 1) {
+      await flight.decrement("totalSeats", { by: seats });
+    } else {
+      await flight.increment("totalSeats", { by: seats });
+    }
+    return flight;
   }
 }
 
