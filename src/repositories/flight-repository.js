@@ -49,7 +49,7 @@ class FlightRepository extends CrudRepository {
     return response;
   }
 
-  async updateRemainingSeats(flightId, seats, decrease = true) {
+  async updateRemainingSeats(flightId, seats, decrease) {
     const transaction = await db.sequelize.transaction();
     try {
       const flight = await Flight.findByPk(flightId);

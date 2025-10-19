@@ -50,7 +50,7 @@ async function updateSeats(req, res){
     const response = await FlightService.updateSeats({
       flightId: req.params.id,
       seats: req.body.seats,
-      decrement: req.body.decrement,
+      decrease: req.body.decrease,
     });
     SuccessResponse.data = response;
     return res.status(StatusCodes.OK).json(SuccessResponse);
