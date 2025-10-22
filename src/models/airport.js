@@ -30,16 +30,16 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unqiue: true,
+        unique: true,
       },
       code: {
         type: DataTypes.STRING,
         allowNull: false,
-        unqiue: true,
+        unique: true,
       },
       address: {
         type: DataTypes.STRING,
-        unqiue: true,
+        unique: true,
       },
       cityId: {
         type: DataTypes.INTEGER,
