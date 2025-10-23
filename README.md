@@ -51,7 +51,16 @@ Lets take a look inside the `src` folder
   ```
  - If you're setting up test or prod environment, make sure you also replace the host with the hosted db url.
 
+ - To run using docker, make sure you have docker installed and running on your machine. Then execute the following command in the root directory:
+ ```
+ docker-compose up --build
+ ```
+ - Set password and database name in `src/config/config.json` & docker-compose.yml.
+ ```
+       Password: 'your_db_password',
+        Database: 'your_db_name',
+ ```
  - To run the server execute
  ```
  npm run dev
- ```
+ ```      
